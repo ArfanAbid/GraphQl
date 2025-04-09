@@ -5,10 +5,11 @@ type Query {
     hello: String
     users: [User]
     user(id: ID!): User
+
 }
 
 type Mutation {
-    addPost(title: String!, content: String!): Post
+  addPost(title: String!, body: String!, views: Int!): Post
 }
 
 
@@ -43,9 +44,12 @@ type Company {
 
 
 type Post {
-    title: String
-    content: String
+  id: ID!
+  title: String
+  body: String
+  views: Int
 }
+
 `;
 
 

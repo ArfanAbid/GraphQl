@@ -13,7 +13,7 @@ import { startStandaloneServer } from '@apollo/server/standalone';
   dotenv.config({path: './.env',});
   
   export const envMode = process.env.NODE_ENV?.trim() || 'DEVELOPMENT';
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 4000;
   
 // const mongoURI = process.env.MONGO_URI! || 'mongodb://localhost:27017';
 // connectDB(mongoURI);
@@ -23,13 +23,17 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 
 
   const graphqlServer = connectGraphQL();
-  // await graphqlServer.start();
+  // await graphqlServer.start(); // uing with Express
 
-  const { url }=await startStandaloneServer(graphqlServer,{ // For API testing Apollo server
+
+
+
+
+  // Without using Express we can use this instead. For API testing Apollo server
+  const { url }=await startStandaloneServer(graphqlServer,{ 
     listen:{port:4000}
   });
   console.log(`🚀 Apollo Server running at ${url}`);
-
 
 
      /*                             
@@ -61,16 +65,36 @@ app.use(
   })
 );
     
-app.use(express.json());
+app.use(express.json());// uing with Express
 app.use(express.urlencoded({extended: true}));
-app.use("/graphql", expressMiddleware(graphqlServer));
 app.use(cors({origin:' * ',credentials:true}));
 app.use(morgan('dev'))
-    
-  
 
-  
 
+// app.use("/graphql", expressMiddleware(graphqlServer));    // uing with Express see endpoint /graphql 
+
+/*
+
+// Also we can use  Middleware for Authorization
+const isAuth = (req:express.Request, res:express.Response, next:express.NextFunction) => {
+  const user="admin";
+  if(user!=="admin"){
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized",
+    });
+  }
+  next();
+}
+app.use("/graphql", isAuth, expressMiddleware(graphqlServer));   
+
+*/
+
+  app.get("/", (req, res) => {
+    res.send("Server is working!");
+  });
+
+  // your routes here
   
   app.use(errorMiddleware);
     

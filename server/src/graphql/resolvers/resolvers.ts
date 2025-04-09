@@ -1,8 +1,8 @@
 
 import { helloWord,
-        newPost,
         getUsers,
         getUserById,
+        addPost,
 } from "@/controllers/graphql.js";
 
 
@@ -23,7 +23,7 @@ export const graphQLResolver = {
         }
     },
     Mutation: {
-        addPost:newPost,
+      addPost: addPost,
     },
 };
 
@@ -60,3 +60,18 @@ query ExampleQuery($userId:ID!) {
 }
 
  */
+
+/*
+
+mutation ExampleMutaution($title: String!, $body: String!, $views: Int!){
+
+  addPost(title: $title, body: $body, views: $views){
+    title
+    body
+    views
+  }
+
+}
+
+
+*/
