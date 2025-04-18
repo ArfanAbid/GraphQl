@@ -20,12 +20,12 @@ import fetch from "node-fetch";
 
 
 
-export const addPost = async (_: unknown, { title, body, userId }: { title: string, body: string, userId:number }) => {
+export const addPost = async (_: unknown, { title, body, views }: { title: string, body: string, views:number }) => {
     const newPost = {
       id: Math.floor(Math.random() * 1000), // fake ID
       title,
       body,
-      userId: Number(userId),
+      views: Number(views),
     };
   
     return newPost;
